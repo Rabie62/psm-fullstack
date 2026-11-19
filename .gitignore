@@ -1,0 +1,8 @@
+*.zip
+node_modules/
+target/
+.angular/cache/
+dist/
+.idea/
+*.iml
+.vscode/
