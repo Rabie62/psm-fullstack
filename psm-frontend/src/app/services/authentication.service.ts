@@ -48,7 +48,27 @@ export class AuthenticationService {
   }
 
   isUserLoggedIn(): boolean {
-    return (sessionStorage.getItem('token') || localStorage.getItem('token')) !== null;
+    const token = sessionStorage.getItem('token') || localStorage.getItem('token');
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const cleanToken = token.replace('Bearer ', '').trim();
+      const parts = cleanToken.split('.');
+      if (parts.length === 3) {
+        const payload = JSON.parse(atob(parts[1]));
+        if (payload.exp && (payload.exp * 1000) < Date.now()) {
+          this.logOut();
+          return false;
+        }
+      }
+    } catch {
+      this.logOut();
+      return false;
+    }
+
+    return true;
   }
 
   getRoles(): string[] {
