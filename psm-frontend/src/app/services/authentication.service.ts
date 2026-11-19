@@ -59,12 +59,10 @@ export class AuthenticationService {
       if (parts.length === 3) {
         const payload = JSON.parse(atob(parts[1]));
         if (payload.exp && (payload.exp * 1000) < Date.now()) {
-          this.logOut();
           return false;
         }
       }
     } catch {
-      this.logOut();
       return false;
     }
 
