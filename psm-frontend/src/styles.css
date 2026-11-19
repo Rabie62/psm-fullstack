@@ -1,0 +1,83 @@
+/* ==========================================================================
+   Thème Argon Dashboard Angular (Creative Tim : https://www.creative-tim.com/product/argon-dashboard-angular)
+   ========================================================================== */
+@import "bootstrap/dist/css/bootstrap.css";
+
+:root {
+  --argon-primary: #5e72e4;
+  --argon-secondary: #f7fafc;
+  --argon-success: #2dce89;
+  --argon-info: #11cdef;
+  --argon-warning: #fb6340;
+  --argon-danger: #f5365c;
+  --argon-default: #172b4d;
+  --argon-gradient: linear-gradient(87deg, #5e72e4 0, #825ee4 100%);
+}
+
+body.bg-argon-light {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #f8f9fe;
+  color: #525f7f;
+  margin: 0;
+}
+
+.bg-gradient-primary {
+  background: var(--argon-gradient) !important;
+}
+
+.argon-sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background: #ffffff;
+  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.argon-main-content {
+  margin-left: 250px;
+  min-height: 100vh;
+}
+
+.argon-card {
+  border: 0;
+  border-radius: 0.375rem;
+  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
+  background-color: #fff;
+}
+
+.argon-card-header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 1.25rem 1.5rem;
+}
+
+.btn-argon-primary {
+  background-color: var(--argon-primary);
+  border-color: var(--argon-primary);
+  color: #fff;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.btn-argon-primary:hover {
+  background-color: #324cdd;
+  color: #fff;
+}
+
+.badge-role-admin {
+  background-color: rgba(245, 54, 92, 0.15);
+  color: #f5365c;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+}
+
+.badge-role-collab {
+  background-color: rgba(45, 206, 137, 0.15);
+  color: #2dce89;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+}

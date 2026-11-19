@@ -1,0 +1,46 @@
+<div class="argon-card col-lg-8 mx-auto">
+  <div class="argon-card-header">
+    <h5 class="mb-0 fw-bold text-dark"><i class="fas fa-edit text-warning me-2"></i>Modifier le Client : {{ client.nom }}</h5>
+  </div>
+  <div class="p-4">
+    <form (ngSubmit)="updateClient()">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Nom du Client</label>
+          <input type="text" class="form-control" [(ngModel)]="client.nom" name="nom" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" [(ngModel)]="client.email" name="email" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Téléphone</label>
+          <input type="text" class="form-control" [(ngModel)]="client.tel" name="tel" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Secteur d'activité</label>
+          <input type="text" class="form-control" [(ngModel)]="client.activite" name="activite">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Adresse complète</label>
+        <input type="text" class="form-control" [(ngModel)]="client.adresse" name="adresse" required>
+      </div>
+      <div class="mb-4">
+        <label class="form-label d-block">Logo / Photo de l'entreprise</label>
+        @if (client.photo) {
+          <div class="mb-2 d-flex align-items-center gap-3">
+            <img [src]="getLogoUrl()" alt="Logo" class="img-thumbnail rounded" style="max-height: 80px; max-width: 120px; object-fit: contain;">
+            <span class="text-muted small">Logo actuel enregistré</span>
+          </div>
+        }
+        <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*">
+        <small class="text-muted">Sélectionnez une nouvelle image pour remplacer le logo actuel.</small>
+      </div>
+      <button type="submit" class="btn btn-argon-primary me-2">Mettre à jour</button>
+      <a routerLink="/listClient" class="btn btn-outline-secondary">Annuler</a>
+    </form>
+  </div>
+</div>

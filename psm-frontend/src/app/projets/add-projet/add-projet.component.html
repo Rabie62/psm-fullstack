@@ -1,0 +1,49 @@
+<div class="argon-card col-lg-8 mx-auto">
+  <div class="argon-card-header">
+    <h5 class="mb-0 fw-bold text-dark"><i class="fas fa-folder-plus text-warning me-2"></i>Ajouter un Projet</h5>
+  </div>
+  <div class="p-4">
+    <form (ngSubmit)="createProjet()">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Libellé du Projet</label>
+          <input type="text" class="form-control" [(ngModel)]="projet.libelle" name="libelle" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Client</label>
+          <select class="form-select" [(ngModel)]="selectedClientId" name="selectedClientId" required>
+            <option [ngValue]="null" disabled>-- Sélectionnez un client --</option>
+            @for (c of clients(); track c.id) {
+              <option [ngValue]="c.id">{{ c.nom }} ({{ c.email }})</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Budget (TND)</label>
+          <input type="number" class="form-control" [(ngModel)]="projet.budget" name="budget" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Durée estimée</label>
+          <input type="text" class="form-control" [(ngModel)]="projet.duree" name="duree" placeholder="ex: 6 mois" required>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Description du Projet</label>
+        <textarea class="form-control" rows="3" [(ngModel)]="projet.description" name="description"></textarea>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Cahier des charges (Document)</label>
+        <input type="file" class="form-control" (change)="onFileSelected($event)">
+        <small class="text-muted">Formats acceptés : PDF, Word, Excel, ZIP, etc. (max 25 Mo, optionnel)</small>
+      </div>
+
+      <button type="submit" class="btn btn-argon-primary me-2" [disabled]="!selectedClientId">Créer le Projet</button>
+      <a routerLink="/listProjet" class="btn btn-outline-secondary">Annuler</a>
+    </form>
+  </div>
+</div>

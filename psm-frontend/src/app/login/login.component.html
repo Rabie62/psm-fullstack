@@ -1,0 +1,41 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-gradient-primary py-5">
+  <div class="col-md-5 col-lg-4">
+    <div class="argon-card p-4">
+      <div class="text-center mb-4">
+        <i class="fas fa-layer-group fa-3x text-primary mb-2"></i>
+        <h3 class="fw-bold text-dark">Projects Manager</h3>
+        <p class="text-muted small">Connectez-vous à votre espace SmartSoft Solutions</p>
+      </div>
+
+      @if (invalidLogin()) {
+        <div class="alert alert-danger">
+          <i class="fas fa-exclamation-triangle me-1"></i> {{ errorMessage() }}
+        </div>
+      }
+
+      <form (ngSubmit)="checkLogin()">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Email professionnel</label>
+          <input type="email" class="form-control" [(ngModel)]="email" name="email"
+                 placeholder="ex: admin@smartsoft.tn" required>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold">Mot de passe</label>
+          <input type="password" class="form-control" [(ngModel)]="password" name="password"
+                 placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn btn-argon-primary w-100 py-2 mb-3">
+          <i class="fas fa-sign-in-alt me-1"></i> Se connecter
+        </button>
+
+        <div class="text-center">
+          <a routerLink="/register" class="text-primary text-decoration-none small">
+            Créer un nouveau compte collaborateur
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

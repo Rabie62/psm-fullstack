@@ -1,0 +1,121 @@
+<!-- Formulaire rapide d'ajout de tâche Kanban -->
+<div class="argon-card p-3 mb-4">
+  <form (ngSubmit)="addTask()" class="row g-2 align-items-end">
+    <div class="col-md-3">
+      <label class="form-label small fw-bold mb-1">Titre de la Tâche</label>
+      <input type="text" class="form-control form-control-sm" [(ngModel)]="newTask.titre" name="titre" placeholder="ex: Intégration JWT" required>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label small fw-bold mb-1">Projet Associé</label>
+      <select class="form-select form-select-sm" [(ngModel)]="selectedProjetId" name="selectedProjetId" required>
+        @for (p of projets(); track p.id) {
+          <option [value]="p.id">{{ p.libelle }}</option>
+        }
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label small fw-bold mb-1">Priorité</label>
+      <select class="form-select form-select-sm" [(ngModel)]="newTask.priorite" name="priorite">
+        <option value="LOW">Basse (LOW)</option>
+        <option value="MEDIUM">Moyenne (MEDIUM)</option>
+        <option value="HIGH">Haute (HIGH)</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label small fw-bold mb-1">Échéance</label>
+      <input type="date" class="form-control form-control-sm" [(ngModel)]="newTask.deadline" name="deadline">
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-sm btn-argon-primary w-100">
+        <i class="fas fa-plus me-1"></i> Ajouter Tâche
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Tableau Kanban à 3 Colonnes -->
+<div class="row g-4">
+  <!-- Colonne 1 : TODO -->
+  <div class="col-md-4">
+    <div class="argon-card h-100">
+      <div class="argon-card-header bg-light d-flex justify-content-between align-items-center">
+        <h6 class="mb-0 fw-bold text-secondary">À FAIRE (TODO)</h6>
+        <span class="badge bg-secondary">{{ todoTasks().length }}</span>
+      </div>
+      <div class="p-3">
+        @for (t of todoTasks(); track t.id) {
+          <div class="border rounded p-3 mb-2 bg-white shadow-sm">
+            <div class="d-flex justify-content-between">
+              <span class="fw-bold text-dark">{{ t.titre }}</span>
+              <span class="badge bg-warning text-dark">{{ t.priorite }}</span>
+            </div>
+            <small class="text-muted d-block mb-2">Projet : {{ t.projet?.libelle }}</small>
+            <div class="d-flex justify-content-between mt-2">
+              <button (click)="moveTask(t, 'IN_PROGRESS')" class="btn btn-xs btn-sm btn-outline-primary">
+                Démarrer <i class="fas fa-arrow-right ms-1"></i>
+              </button>
+              @if (authService.isAdmin()) {
+                <button (click)="removeTask(t)" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Colonne 2 : IN_PROGRESS -->
+  <div class="col-md-4">
+    <div class="argon-card h-100">
+      <div class="argon-card-header bg-light d-flex justify-content-between align-items-center">
+        <h6 class="mb-0 fw-bold text-primary">EN COURS (IN PROGRESS)</h6>
+        <span class="badge bg-primary">{{ inProgressTasks().length }}</span>
+      </div>
+      <div class="p-3">
+        @for (t of inProgressTasks(); track t.id) {
+          <div class="border border-primary rounded p-3 mb-2 bg-white shadow-sm">
+            <div class="d-flex justify-content-between">
+              <span class="fw-bold text-dark">{{ t.titre }}</span>
+              <span class="badge bg-info">{{ t.progression }}%</span>
+            </div>
+            <small class="text-muted d-block mb-2">Projet : {{ t.projet?.libelle }}</small>
+            <div class="d-flex justify-content-between mt-2">
+              <button (click)="moveTask(t, 'TODO')" class="btn btn-sm btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i>
+              </button>
+              <button (click)="moveTask(t, 'DONE')" class="btn btn-sm btn-success">
+                Terminer <i class="fas fa-check ms-1"></i>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Colonne 3 : DONE -->
+  <div class="col-md-4">
+    <div class="argon-card h-100">
+      <div class="argon-card-header bg-light d-flex justify-content-between align-items-center">
+        <h6 class="mb-0 fw-bold text-success">TERMINÉ (DONE)</h6>
+        <span class="badge bg-success">{{ doneTasks().length }}</span>
+      </div>
+      <div class="p-3">
+        @for (t of doneTasks(); track t.id) {
+          <div class="border border-success rounded p-3 mb-2 bg-white shadow-sm">
+            <div class="d-flex justify-content-between">
+              <span class="fw-bold text-decoration-line-through text-muted">{{ t.titre }}</span>
+              <span class="badge bg-success">100%</span>
+            </div>
+            <small class="text-muted d-block mb-2">Projet : {{ t.projet?.libelle }}</small>
+            @if (authService.isAdmin()) {
+              <div class="text-end">
+                <button (click)="removeTask(t)" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

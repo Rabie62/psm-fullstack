@@ -1,0 +1,62 @@
+<div class="argon-card">
+  <div class="argon-card-header">
+    <h5 class="mb-0 fw-bold text-dark"><i class="fas fa-users-cog text-danger me-2"></i>Gestion des Utilisateurs et Rôles</h5>
+  </div>
+
+  <div class="p-3">
+    @if (feedbackMessage()) {
+      <div class="alert alert-success py-2">{{ feedbackMessage() }}</div>
+    }
+    @if (errorMessage()) {
+      <div class="alert alert-danger py-2">{{ errorMessage() }}</div>
+    }
+
+    <div class="table-responsive">
+      <table class="table align-middle table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Nom et Prénom</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th>Rôle Actuel</th>
+            <th>Changer le Rôle</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (u of users(); track u.id) {
+            <tr>
+              <td>#{{ u.id }}</td>
+              <td class="fw-semibold">{{ u.prenom }} {{ u.nom }}</td>
+              <td>{{ u.email }}</td>
+              <td>{{ u.tel }}</td>
+              <td>
+                @for (r of u.roles; track r.id) {
+                  <span [ngClass]="r.libelle === 'ADMIN' ? 'badge-role-admin' : 'badge-role-collab'">
+                    {{ r.libelle }}
+                  </span>
+                }
+              </td>
+              <td>
+                <select #roleSelect class="form-select form-select-sm d-inline-block w-auto me-2">
+                  <option value="COLLABORATEUR" [selected]="u.roles?.[0]?.libelle === 'COLLABORATEUR'">COLLABORATEUR</option>
+                  <option value="ADMIN" [selected]="u.roles?.[0]?.libelle === 'ADMIN'">ADMIN</option>
+                </select>
+                <button (click)="changeRole(u, roleSelect.value)" class="btn btn-sm btn-argon-primary">
+                  Appliquer
+                </button>
+              </td>
+              <td>
+                <button (click)="toggleAccount(u)"
+                        [ngClass]="u.active === 1 ? 'btn btn-sm btn-outline-danger' : 'btn btn-sm btn-outline-success'">
+                  {{ u.active === 1 ? 'Désactiver' : 'Activer' }}
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
